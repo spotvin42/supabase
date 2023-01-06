@@ -148,6 +148,22 @@ module.exports = (collectionName, doc, recordCounters, writeRecord) => {
 }
 ```
 
+### Insert Point type from lat and long, and converting it in another document
+```js
+module.exports = async (collectionName, doc, recordCounters, writeRecord) => {
+  const users_location = {
+    geohash: null,
+    geopoint: `(${doc.lat}, ${doc.lng})`,
+    city: doc.city,
+    user_id: doc.firestore_id,
+  };
+  
+  await writeRecord("users_location", users_location, recordCounters);
+
+return doc
+}
+```
+
 #### Flatten JSON into separate files
 
 Flatten the `users` collection into separate files:
